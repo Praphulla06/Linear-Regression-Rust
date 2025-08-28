@@ -86,7 +86,7 @@ y_train: 100
 weight: -0.012569690006533971, bias: 0.0
 Error before training: 50.553554911307536
 Training...
-Error after training: 0.04073567862895372. epochs: 1024
+Error after training: 0.04073567862895372. epochs: 1024.
 weight: 2.3294859523177642, bias: 4.609761319919488
 ```
 
