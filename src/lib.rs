@@ -29,15 +29,15 @@ impl LinearRegression {
         }
     }
 
-    fn forward(&mut self) {
+    pub fn forward(&mut self) {
         self.y_pred = &self.weights * &self.x_train + self.bias;
     }
 
-    fn residual(&mut self) {
+    pub fn residual(&mut self) {
         self.residual = &self.y_pred - &self.y_train;
     }
 
-    fn mse(&mut self) {
+    pub fn mse(&mut self) {
         // self.residual();
         let residual = self.residual.iter().map(|i| i.powf(2.0));
         let sum: f64 = residual.sum();

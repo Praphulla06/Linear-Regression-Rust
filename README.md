@@ -44,34 +44,50 @@ The main example demonstrates a simple linear relationship:
 
 ```rust
 use ndarray::Array;
+use ndarray::prelude::*;
+
 use linear_regression::LinearRegression;
 
 fn main() {
-    let x_train = Array::<f64, _>::linspace(0., 2., 50);
-    let y_train = Array::from(
-        x_train.to_vec().into_iter().map(|x| 2. * x + 5.).collect::<Vec<f64>>()
+    let x_train = Array::<f64, Ix1>::linspace(0., 2., 100);
+    let y: Vec<f64> = x_train.to_vec().into_iter().map(|x| 2. * x + 5.).collect();
+    let y_train = Array::from(y);
+
+    println!("x_train: {}\ny_train: {}", x_train.len(), y_train.len());
+    let mut model_0 = LinearRegression::new(&x_train, &y_train);
+    
+    println!(
+        "weight: {:?}, bias: {:?}",
+        model_0.weights.mean().unwrap(),
+        model_0.bias
     );
 
-    let mut model = LinearRegression::new(&x_train, &y_train);
+    model_0.train(1);
+    println!("Error before training: {:?}", model_0.error);
 
-    println!("Before training - Error: {:?}", model.error);
-    println!("Weight: {:?}, Bias: {:?}", model.weights.mean().unwrap(), model.bias);
+    let epoch = 1024;
+    println!("Training...");
+    model_0.train(epoch);
 
-    model.train(1024);
-
-    println!("After training - Error: {:?}", model.error);
-    println!("Weight: {:?}, Bias: {:?}", model.weights.mean().unwrap(), model.bias);
+    println!("Error after training: {:?}. epochs: {}", model_0.error, epoch);
+    println!(
+        "weight: {:?}, bias: {:?}",
+        model_0.weights.mean().unwrap(),
+        model_0.bias
+    );
 }
 ```
 
 **Output Example**:
 
 ```
-Before training - Error: 0.0
-Weight: 0.0, Bias: 0.0
+x_train: 100
+y_train: 100
+weight: -0.012569690006533971, bias: 0.0
+Error before training: 50.553554911307536
 Training...
-After training - Error: 0.00123
-Weight: 2.0, Bias: 5.0
+Error after training: 0.04073567862895372. epochs: 1024
+weight: 2.3294859523177642, bias: 4.609761319919488
 ```
 
 ---
