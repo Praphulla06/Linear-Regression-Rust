@@ -20,7 +20,7 @@ A simple **linear regression** implementation in Rust using `ndarray` for numeri
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/linear_regression_rust.git
+git clone https://github.com/Praphulla06/Linear-Regression-Rust.git
 cd linear_regression_rust
 ```
 
